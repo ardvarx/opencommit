@@ -54,18 +54,6 @@ print-dirs:
 
 
 ################################################################################
-# commands
-#
-
-# AWS CLI
-awsProfile = ${STAGE}-${project}
-AWS = aws --region ${AWS_REGION} --profile ${awsProfile} --no-cli-pager
-ifneq (${CI}, "")
-	AWS = AWS_PAGER="" aws --region ${AWS_REGION} --profile ${awsProfile}
-endif
-
-
-################################################################################
 # bump
 #
 
@@ -290,4 +278,3 @@ apply-pr:
 	@echo ""
 	@echo "✓ PR #$(PR) has been applied to master branch"
 	@echo "  To push to your fork: git push origin master"
-# test
