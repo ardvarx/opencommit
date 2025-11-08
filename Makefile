@@ -278,3 +278,4 @@ apply-pr:
 	@echo ""
 	@echo "✓ PR #$(PR) has been applied to master branch"
 	@echo "  To push to your fork: git push origin master"
+
