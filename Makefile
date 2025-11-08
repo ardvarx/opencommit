@@ -81,6 +81,7 @@ bump:
 	--circle-ci-token ${CI_TOKEN_BUMP_VERSION} \
 	--circle-ci-project-slug ${CI_PROJECT_SLUG_OPENCOMMIT} \
 	--tmp-ci-dir ${tmpCiDir}
+	--skip-ci
 
 
 ################################################################################
