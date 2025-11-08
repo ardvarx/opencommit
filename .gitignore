@@ -13,3 +13,4 @@ src/*.json
 test.ts
 notes.md
 .nvmrc
+/out/
