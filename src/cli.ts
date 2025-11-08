@@ -42,7 +42,7 @@ cli(
   },
   async ({ flags }) => {
     await runMigrations();
-    await checkIsLatestVersion();
+    // await checkIsLatestVersion(); // Disabled for fork
 
     if (await isHookCalled()) {
       prepareCommitMessageHook();

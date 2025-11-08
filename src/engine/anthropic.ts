@@ -64,6 +64,13 @@ export class AnthropicEngine implements AiEngine {
       return removeContentTags(content, 'think');
     } catch (error) {
       const err = error as Error;
+
+      // Enhanced error logging for debugging
+      console.error('Full error object:', error);
+      console.error('Error name:', err?.name);
+      console.error('Error message:', err?.message);
+      console.error('Error stack:', err?.stack);
+
       outro(`${chalk.red('✖')} ${err?.message || err}`);
 
       if (

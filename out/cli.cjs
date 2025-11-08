@@ -47672,7 +47672,7 @@ function G3(t2, e3) {
 // package.json
 var package_default = {
   name: "opencommit",
-  version: "3.2.10",
+  version: "3.2.10-ardvarx.0",
   description: "Auto-generate impressive commits in 1 second. Killing lame commits with AI \u{1F92F}\u{1F52B}",
   keywords: [
     "git",
@@ -57009,9 +57009,11 @@ var AnthropicEngine = class {
         system: systemMessage,
         messages: restMessages,
         temperature: 0,
-        top_p: 0.1,
         max_tokens: this.config.maxTokensOutput
       };
+      if (!/claude.*-4-5/.test(params.model)) {
+        params.top_p = 0.1;
+      }
       try {
         const REQUEST_TOKENS = messages.map((msg) => tokenCount(msg.content) + 4).reduce((a4, b7) => a4 + b7, 0);
         if (REQUEST_TOKENS > this.config.maxTokensInput - this.config.maxTokensOutput) {
@@ -57023,6 +57025,10 @@ var AnthropicEngine = class {
         return removeContentTags(content, "think");
       } catch (error) {
         const err = error;
+        console.error("Full error object:", error);
+        console.error("Error name:", err?.name);
+        console.error("Error message:", err?.message);
+        console.error("Error stack:", err?.stack);
         ce(`${source_default.red("\u2716")} ${err?.message || err}`);
         if (axios_default.isAxiosError(error) && error.response?.status === 401) {
           const anthropicAiError = error.response.data.error;
@@ -67946,36 +67952,6 @@ ${fileContent.toString()}`;
   }
 };
 
-// src/version.ts
-var getOpenCommitLatestVersion = async () => {
-  try {
-    const { stdout } = await execa("npm", ["view", "opencommit", "version"]);
-    return stdout;
-  } catch (_7) {
-    ce("Error while getting the latest version of opencommit");
-    return void 0;
-  }
-};
-
-// src/utils/checkIsLatestVersion.ts
-var checkIsLatestVersion = async () => {
-  const latestVersion = await getOpenCommitLatestVersion();
-  if (latestVersion) {
-    const currentVersion = package_default.version;
-    if (currentVersion !== latestVersion) {
-      ce(
-        source_default.yellow(
-          `
-You are not using the latest stable version of OpenCommit with new features and bug fixes.
-Current version: ${currentVersion}. Latest version: ${latestVersion}.
-\u{1F680} To update run: npm i -g opencommit@latest.
-        `
-        )
-      );
-    }
-  }
-};
-
 // src/migrations/_run.ts
 var import_fs5 = __toESM(require("fs"), 1);
 var import_os2 = require("os");
@@ -68158,7 +68134,6 @@ Z2(
   },
   async ({ flags }) => {
     await runMigrations();
-    await checkIsLatestVersion();
     if (await isHookCalled()) {
       prepareCommitMessageHook();
     } else {
