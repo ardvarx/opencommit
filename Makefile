@@ -14,7 +14,7 @@ project = opencommit
 #
 
 # INF
-INF = INFISICAL_TOKEN=$$(get_inf_token.sh) infisical secrets --silent --plain --projectId=${INF_PROJECT_ID}
+INF = INFISICAL_TOKEN=$$(get_inf_token.sh) infisical secrets --silent --plain --projectId=${ARDVARX_INF_PROJECT_ID}
 
 
 CI_REPOS_DIR               = $$($(INF) --env=xx get CI_REPOS_DIR)
