@@ -14,7 +14,8 @@ project = opencommit
 #
 
 # INF
-INF = INFISICAL_TOKEN=$$(get_inf_token.sh) infisical secrets --silent --plain --projectId=${ARDVARX_INF_PROJECT_ID}
+INF_TOKEN_ARGS = -d ${ARDVARX_INF_TOKEN_DIR} -i ${ARDVARX_INF_MACHINE_CLIENT_ID} -s ${ARDVARX_INF_MACHINE_CLIENT_SECRET}
+INF = INFISICAL_TOKEN=$$(get_inf_token_2.sh ${INF_TOKEN_ARGS}) infisical secrets --silent --plain --projectId=${ARDVARX_INF_PROJECT_ID}
 
 
 CI_REPOS_DIR               = $$($(INF) --env=xx get CI_REPOS_DIR)
@@ -33,12 +34,12 @@ print-secrets:
 # dirs
 #
 
-projectDir = ${REPOS_DIR}/${project}
+projectDir = ${ARDVARX_REPOS_DIR}/${project}
 ifeq (${CI}, true)
 	projectDir = ${CI_REPOS_DIR}
 endif
 
-sharedScriptsDir = ${REPOS_DIR}/shared-scripts
+sharedScriptsDir = ${ARDVARX_REPOS_DIR}/shared-scripts
 ifeq (${CI}, true)
 	sharedScriptsDir = ${CI_REPOS_DIR}/shared-scripts
 endif
